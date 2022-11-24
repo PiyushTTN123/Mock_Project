@@ -1,0 +1,45 @@
+ <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html" 
+data-sly-call="${clientlib.all @ categories='myproject.bootcamp'}"/>
+
+	<main role="main" class="container">
+      <div class="row">
+              <aside class="col-md-4 blog-sidebar">
+          <div class="p-3 mb-3 bg-light rounded">
+            <h4 class="font-italic">About</h4>
+            <p class="mb-0">${properties.about}</p>
+          </div>
+          <div class="p-3">
+            <h4 class="font-italic">Archives</h4>
+            <ol class="list-unstyled mb-0">
+              <li><a href="${properties.linkText1}">January 2022</a></li>
+			  <li><a href="${properties.linkText1}">February 2022</a></li>
+			  <li><a href="${properties.linkText1}">March 2022</a></li>
+              <li><a href="${properties.linkText1}">April 2022</a></li>
+              <li><a href="${properties.linkText1}">May 2022</a></li>
+              <li><a href="${properties.linkText1}">June 2022</a></li>
+			  <li><a href="${properties.linkText1}">July 2022</a></li>
+			  <li><a href="${properties.linkText1}">August 2022</a></li>
+			  <li><a href="${properties.linkText1}">September 2022</a></li>
+			  <li><a href="${properties.linkText1}">October 2022</a></li>
+			  <li><a href="${properties.linkText1}">November 2022</a></li>
+			  <li><a href="${properties.linkText1}">December 2022</a></li>
+            </ol>
+          </div>
+        </aside><!-- /.blog-sidebar -->
+      </div><!-- /.row -->
+    </main><!-- /.container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="assets/js/vendor/popper.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="assets/js/vendor/holder.min.js"></script>
+    <script>
+      Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+      });
+    </script>

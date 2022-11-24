@@ -1,0 +1,12 @@
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html" 
+data-sly-call="${clientlib.all @ categories='myproject.bootcamp'}"/>
+<main role="main" class="container">
+	<div class="row">
+		<div class="p-3">
+			<h4 class="font-italic">Archives</h4>
+			<ol class="list-unstyled mb-0" data-sly-list="${currentPage.listChildren}">
+					<li><a href="${item.path}.html">${item.title}</a></li>
+				</ol>
+		</div>
+	</div>
+</main>
