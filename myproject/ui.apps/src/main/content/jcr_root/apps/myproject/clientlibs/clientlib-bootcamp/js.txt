@@ -1,7 +1,0 @@
-#base=js
-
-blog.js
-bootstap.min.js
-docs.min.js
-holder.min.js
-popper.min.js
