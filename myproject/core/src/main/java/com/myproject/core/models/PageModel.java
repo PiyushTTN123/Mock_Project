@@ -10,15 +10,18 @@ import org.apache.sling.models.annotations.Model;
 import com.day.cq.commons.inherit.HierarchyNodeInheritanceValueMap;
 import com.day.cq.commons.inherit.InheritanceValueMap;
 import com.day.cq.wcm.api.Page;
+
 //Model to access current page properties
-@Model(adaptables= {Resource.class,SlingHttpServletRequest.class},defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
+@Model(adaptables = { Resource.class,
+		SlingHttpServletRequest.class }, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class PageModel {
 	@Inject
-	private Page currentPage;//Object of current page.
-	public int getNoOfBlogs() {	//To convert value string to integer
+	private Page currentPage;// Object of current page.
+
+	public int getNoOfBlogs() { // To convert value string to integer
 		InheritanceValueMap ivm = new HierarchyNodeInheritanceValueMap(currentPage.getContentResource());
 		int blogs = ivm.getInherited("noOfBlogs", Integer.class);
-		return blogs-1;
+		return blogs - 1;
 	}
 }
 

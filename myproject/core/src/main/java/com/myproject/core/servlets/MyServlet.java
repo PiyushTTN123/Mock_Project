@@ -1,45 +1,72 @@
 package com.myproject.core.servlets;
 
-import com.day.cq.commons.jcr.JcrConstants;
-import com.myproject.core.services.BlogsImpl;
+import java.io.IOException;
+
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+import javax.servlet.Servlet;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.servlets.HttpConstants;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
-import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
-import org.apache.sling.servlets.annotations.SlingServletResourceTypes;
+import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.propertytypes.ServiceDescription;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.servlet.Servlet;
-import javax.servlet.ServletException;
-import java.io.IOException;
+@Component(service = Servlet.class, property = { 
+		"sling.servlet.methods=" + HttpConstants.METHOD_POST,
+		"sling.servlet.paths=" + "/bin/submitdata2" })
+public class MyServlet extends SlingAllMethodsServlet {
+	private static final long serialVersionUID = -159625176093879129L;
+	private static final Logger log = LoggerFactory.getLogger(MyServlet.class);
 
-/**
- * Servlet that writes some sample content into the response. It is mounted for
- * all resources of a specific Sling resource type. The
- * {@link SlingSafeMethodsServlet} shall be used for HTTP methods that are
- * idempotent. For write operations use the {@link SlingAllMethodsServlet}.
- */
-@Component(service = { Servlet.class })
-@SlingServletResourceTypes(
-        resourceTypes="myproject/components/page",
-        methods=HttpConstants.METHOD_GET,
-        extensions="txt")
-@ServiceDescription("Simple Demo Servlet")
-public class MyServlet extends SlingSafeMethodsServlet {
-    private static final long serialVersionUID = 1L;
-    @Reference BlogsImpl blogs;
-    
-    @Override
-    protected void doGet(final SlingHttpServletRequest req,
-            final SlingHttpServletResponse resp) throws ServletException, IOException {
-        final Resource resource = req.getResource();
-        resp.setContentType("text/plain");
-        resp.getWriter().write("Title = " + resource.getValueMap().get(JcrConstants.JCR_TITLE));
-    }
+	private String nodePath = "/content/myproject/mynode";
 
+	@Override
+	protected void doPost(SlingHttpServletRequest req, SlingHttpServletResponse resp) {
+		try {
+			ResourceResolver resourceResolver = req.getResourceResolver();
+
+			Resource resource = resourceResolver.getResource(nodePath);
+
+			Node node = resource.adaptTo(Node.class);
+
+			Node newNode = node.addNode(getNodeName(req), "nt:unstructured");
+			
+			newNode.setProperty("lastName", getRequestParameter(req, "lastName"));
+			newNode.setProperty("firstName", getRequestParameter(req, "firstName"));
+
+			resourceResolver.commit();
+
+		} catch (RepositoryException e) {
+
+			log.error(e.getMessage(), e);
+
+			e.printStackTrace();
+
+		} catch (PersistenceException e) {
+
+			log.error(e.getMessage(), e);
+
+			e.printStackTrace();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static String getRequestParameter(SlingHttpServletRequest request, String s) {
+		String parameterValue = request.getParameter(s);
+		return parameterValue;
+	}
+
+	public static String getNodeName(SlingHttpServletRequest request) {
+		String Name = request.getParameter("firstName");
+		String UserNodeName = Name;
+		return UserNodeName;
+	}
 }

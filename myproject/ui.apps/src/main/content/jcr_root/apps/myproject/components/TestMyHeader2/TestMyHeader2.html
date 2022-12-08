@@ -1,0 +1,39 @@
+<sly data-sly-use.model="com.myproject.core.models.Header"> </sly>
+<sly data-sly-use.model1="com.myproject.core.models.PagePathModel">
+</sly>
+<sly
+	data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"
+	data-sly-call="${clientlib.all @ categories='myproject.bootcamp,myproject.comment'}" />
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<header class="blog-header py-3">
+		<div
+			class="row flex-nowrap justify-content-between align-items-center">
+			<div class="col-12 text-center">
+				<a class="blog-header-logo text-dark" href="${properties.Logolink}"
+					name="top"> <img src="${properties.image}" class="ttn-logo">
+					${properties.logoText}
+				</a>
+				<nav class="topnav">
+					<ul data-sly-list="${model1.allChild}">
+						<li><a href="${item.path}.html">${item.name}</a>
+							<ul data-sly-list.level1Child="${item.listChildren}">
+								<li><a href="${level1Child.path}.html">${level1Child.name}</a>
+									<ul data-sly-list.level2Child="${level1Child.listChildren}">
+										<li><a href="${level2Child.path}.html">${level2Child.name}</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+</body>
+</html>

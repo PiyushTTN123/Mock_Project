@@ -1,4 +1,5 @@
 package com.myproject.core.models;
+
 import javax.annotation.PostConstruct;
 
 import javax.inject.Inject;
@@ -11,11 +12,11 @@ import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 //Model for Header Component
-@Model(adaptables= Resource.class,defaultInjectionStrategy=DefaultInjectionStrategy.OPTIONAL)
+@Model(adaptables = Resource.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class Header {
-	//All variables
-	@ValueMapValue(injectionStrategy=InjectionStrategy.OPTIONAL)
-	@Default(values="BootCamp Blog")
+	// All variables
+	@ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+	@Default(values = "BootCamp Blog")
 	protected String logoText;
 	@Inject
 	private String HomeLink;
@@ -23,7 +24,8 @@ public class Header {
 	private String PublishedBlogslink;
 	@Inject
 	private String image;
-	//setters and getters
+
+	// setters and getters
 	public String getImage() {
 		return image;
 	}
@@ -47,6 +49,7 @@ public class Header {
 	public void setPublishedBlogslink(String publishedBlogslink) {
 		PublishedBlogslink = publishedBlogslink;
 	}
+
 	public String getLogoText() {
 		return logoText;
 	}
@@ -56,4 +59,3 @@ public class Header {
 	}
 
 }
-

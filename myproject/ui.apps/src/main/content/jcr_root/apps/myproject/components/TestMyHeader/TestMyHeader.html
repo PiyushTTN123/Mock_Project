@@ -1,0 +1,107 @@
+<sly data-sly-use.model="com.myproject.core.models.Header"> </sly>
+<sly
+	data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"
+	data-sly-call="${clientlib.all @ categories='myproject.bootcamp'}" />
+
+<head>
+<style>
+        #nav {
+            list-style: none inside;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        #nav li {
+            display: block;
+            position: relative;
+            float: left;
+            background: #24af15;
+            /* menu background color */
+        }
+
+        #nav li a {
+            display: block;
+            padding: 0;
+             
+            width: 200px;
+            /* this is the width of the menu items */
+            line-height: 35px;
+            /* this is the hieght of the menu items */
+            color: #ffffff;
+            /* list item font color */
+        }
+
+        #nav li li a {
+            font-size: 80%;
+        }
+
+        /* smaller font size for sub menu items */
+
+        #nav li:hover {
+            background: #003f20;
+        }
+
+        #nav ul {
+            position: absolute;
+            padding: 0;
+            left: 0;
+            display: none;
+            /* hides sublists */
+        }
+
+        #nav li:hover ul ul {
+            display: none;
+        }
+
+        /* hides sub-sublists */
+
+        #nav li:hover ul {
+            display: block;
+        }
+
+
+        #nav li li:hover ul {
+            display: block;
+            /* shows sub-sublist on hover */
+            margin-left: 200px;
+            /* this should be the same width as the parent list item */
+            margin-top: -35px;
+            /* aligns top of sub menu with top of list item */
+        }
+    </style>
+    </head>
+<body>
+	<header class="blog-header py-3">
+		<div
+			class="row flex-nowrap justify-content-between align-items-center">
+			<div class="col-12 text-center">
+				<a class="blog-header-logo text-dark" href="${properties.Logolink}"
+					name="top"> <img src="${properties.image}" class="ttn-logo">
+					${properties.logoText}
+				</a>
+					<ul id="nav" data-sly-list.child="${currentPage.listChildren}">
+						<li><a href="${child.path}.html">${child.title}</a>
+							<ul data-sly-list="${child.listChildren}">
+								<li><a href="${item.path}.html">${item.title}</a></li>
+							</ul>
+						</li>
+					</ul>
+			</div>
+		</div>
+	</header>
+
+	<div class="nav-scroller py-1 mb-2">
+		<nav class="nav d-flex">
+			<sly data-sly-test="${pageProperties.presets=='Home'}"> <a
+				class="p-2 text-muted" href="${properties.Homelink}">Home</a> </sly>
+			<sly data-sly-test="${pageProperties.presets=='Published Blogs'}">
+			<a class="p-2 text-muted" href="${properties.PublishedBlogslink}">Published
+				Blogs</a> </sly>
+			<sly data-sly-test="${pageProperties.presets=='Both'}"> <a
+				class="p-2 text-muted" href="${properties.Homelink}">Home</a> <a
+				class="p-2 text-muted" href="${properties.PublishedBlogslink}">Published
+				Blogs</a> </sly>
+		</nav>
+	</div>
+</body>

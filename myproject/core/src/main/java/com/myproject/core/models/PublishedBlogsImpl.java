@@ -13,18 +13,21 @@ import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 
 import com.myproject.core.services.Blogs;
 
-@Model(adaptables=Resource.class,defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
+@Model(adaptables = Resource.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class PublishedBlogsImpl {
 	@Inject
-	@Named(value="./blogsList")
+	@Named(value = "./blogsList")
 	private List<PublishedBlogsModel> blogsList;
-    public List<PublishedBlogsModel> getBlogsList() {
+
+	public List<PublishedBlogsModel> getBlogsList() {
 		return blogsList;
 	}
+
 	@OSGiService
-    Blogs blogs;
-    int BlogsNum;
+	Blogs blogs;
+	int BlogsNum;
+
 	public int getBlogsNum() {
-		return blogs.noOfBlogs()-1;
+		return blogs.noOfBlogs() - 1;
 	}
 }

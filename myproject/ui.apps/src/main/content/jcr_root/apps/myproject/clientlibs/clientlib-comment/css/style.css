@@ -1,11 +1,64 @@
-body {
-    background: dodgerblue linear-gradient(45deg, aqua, dodgerblue, deeppink) fixed;
-
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetics,sans-serif;
+text-transform:captalize;
+text-decoration: none
 }
-#comment-box, #post {
-    border: none;
-    border-radius: 5px;
+header {
+position:fixed;
+top:0;left:0;right:0;
+background:#ffffff;
+padding:0px 7%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+z-index:1000}
+header .logo{
+font-weight:bolder;
+font-size:25px;
+color:#333;
 }
-#post:hover{
-    background-color: deeppink;
+header .topnav ul{
+list-style:none;
+}
+header .topnav ul li{
+position:relative;
+float:left;
+}
+header .topnav ul li a{
+font-size:20px;
+padding:20px;
+color:#333;
+display:block;
+}
+header .topnav ul li ul{
+position:absolute;
+left:0;
+width:200px;
+background:#fff;
+display:none;
+}
+header .topnav ul li ul li{
+width:100%;
+border-top:1px solid rgba(0,0,0,.1);
+}
+header .topnav ul li ul li ul{
+left:200px;
+top:0;
+}
+header .topnav ul li ul li ul li{
+	width:100%;
+border-top:1px solid rgba(0,0,0,.1);
+}
+header .topnav ul li ul li ul li ul{
+left:200px;
+top:0;
+}
+header .topnav ul li:hover>ul{
+display:initial;
+}
+header .topnav ul li ul li:hover>ul{
+display:initial;
 }

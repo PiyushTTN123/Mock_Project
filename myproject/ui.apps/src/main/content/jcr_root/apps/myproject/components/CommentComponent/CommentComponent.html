@@ -1,19 +1,42 @@
- <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html" 
-data-sly-call="${clientlib.all @ categories='myproject.comment'}"/>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comment Box</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>  
-    <input type="text" id="comment-box" placeholder="Enter comment">
-    <button id="post">Post</button>
-    <ul id="unordered">     
-   </ul>
-    <script src="code.js"></script>
+<sly data-sly-use.model="com.myproject.core.models.NodeDataModel"/>
+<body>
+<form id="Form1"   method="POST">
+    <label>First name:</label>
+    <input type="text" name="firstName" placeholder="Enter Firstname">
+    <br>
+    <label>Last name:</label>
+    <input type="text" name="lastName" placeholder="Enter Lastname">
+    <br>
+    <input id="post" type="submit" value="Post">
+</form>
+<div>
+<p>Piyush</p>
+<ul data-sly-list="${model.allChildren}">
+<li>${item.name}</li>
+</ul>
+</div>
 </body>
-</html>
+
+<script>
+var frm = $('#Form1');
+
+    frm.submit(function (e) {
+
+        e.preventDefault();
+
+        $.ajax({
+            type: frm.attr('method'),
+            url:  "/bin/submitdata2",
+            data: frm.serialize(),
+            success: function (data) {
+                alert("Success");
+                console.log('Submission was successful.');
+                console.log(data);
+            },
+            error: function (data) {
+                console.log('An error occurred.');
+                console.log(data);
+            },
+        });
+    });
+</script>

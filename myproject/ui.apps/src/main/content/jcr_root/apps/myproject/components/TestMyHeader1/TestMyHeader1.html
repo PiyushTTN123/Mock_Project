@@ -1,0 +1,111 @@
+<sly data-sly-use.model="com.myproject.core.models.Header"> </sly>
+<sly data-sly-use.mymodel="com.myproject.core.models.MyPageModel"></sly>
+<sly
+	data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"
+	data-sly-call="${clientlib.all @ categories='myproject.bootcamp'}" />
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, Helvetics, sans-serif;
+	text-transform: captalize;
+	text-decoration: none
+}
+
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #ffffff;
+	padding: 0px 7%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	z-index: 1000
+}
+
+header .logo {
+	font-weight: bolder;
+	font-size: 25px;
+	color: #333;
+}
+
+header .topnav ul {
+	list-style: none;
+}
+
+header .topnav ul li {
+	position: relative;
+	float: left;
+}
+
+header .topnav ul li a {
+	font-size: 20px;
+	padding: 20px;
+	color: #333;
+	display: block;
+}
+
+header .topnav ul li ul {
+	position: absolute;
+	left: 0;
+	width: 200px;
+	background: #fff;
+	display: none;
+}
+
+header .topnav ul li ul li {
+	width: 100%;
+	border-top: 1px solid rgba(0, 0, 0, .1);
+}
+
+header .topnav ul li ul li ul {
+	left: 200px;
+	top: 0;
+}
+
+header .topnav ul li:hover>ul {
+	display: initial;
+}
+</style>
+</head>
+<body>
+	<header class="blog-header py-3">
+		<div
+			class="row flex-nowrap justify-content-between align-items-center">
+			<div class="col-12 text-center">
+				<a class="blog-header-logo text-dark" href="${properties.Logolink}"
+					name="top"> <img src="${properties.image}" class="ttn-logo">
+					${properties.logoText}
+				</a>
+				<nav class="topnav">
+					<ul>
+						<li><a>${currentPage.title}</a>
+							<ul data-sly-list.child="${currentPage.listChildren}">
+								<li><a href="${child.path}.html">${child.title}</a>
+									<ul data-sly-list="${child.listChildren}">
+										<li><a href="${item.path}.html">${item.title}</a></li>
+									</ul></li>
+							</ul></li>
+						<li><a>${mymodel.name}</a>
+							<ul data-sly-list.child1="${mymodel.getChildren}"
+								data-sly-test="${child1.name!='jcr:content'}">
+								<li><a href="${child1.path}.html">${child1.name}</a>
+									<ul data-sly-list="${child1.listChildren}">
+										<li><a href="${item.path}.html">${item.name}</a></li>
+									</ul></li>
+							</ul></li>
+
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+</body>
+</html>

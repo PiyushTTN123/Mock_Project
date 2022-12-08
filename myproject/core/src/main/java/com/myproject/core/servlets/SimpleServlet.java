@@ -20,7 +20,10 @@ import com.myproject.core.services.BlogsImpl;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.api.servlets.HttpConstants;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
@@ -39,22 +42,58 @@ import java.io.IOException;
  * {@link SlingSafeMethodsServlet} shall be used for HTTP methods that are
  * idempotent. For write operations use the {@link SlingAllMethodsServlet}.
  */
-@Component(service = { Servlet.class })
-@SlingServletResourceTypes(
-        resourceTypes="myproject/components/page",
-        methods=HttpConstants.METHOD_GET,
-        extensions="txt")
-@ServiceDescription("Simple Demo Servlet")
+//@Component(service = { Servlet.class })
+//@SlingServletResourceTypes(
+//        resourceTypes="myapp/piyush/mypage",
+//        methods=HttpConstants.METHOD_GET,
+//        selectors="sample",
+//        extensions="html")
+//@ServiceDescription("Simple Demo Servlet")
+
+
+//@Component(service= Servlet.class, property= {
+//		"sling.servlet.recourceTypes=" + "/myapp/piyush/mypage",
+//		"sling.servlet.methods=" + "HttpConstants.METHOD_POST",
+//		"sling.servlet.selectors="+"sample",
+//		"sling.servlet.extensions="+"html"})
+
+//@Component(service = { Servlet.class })
+//@SlingServletResourceTypes(
+//    resourceTypes="/myapp/piyush/mypage", 
+//    methods= "GET",
+//    extensions="html",
+//    selectors="sample")
+
+
+
+@Component(service=Servlet.class,
+property={
+        "sling.servlet.methods=" + HttpConstants.METHOD_GET,
+        "sling.servlet.resourceTypes="+ "/myapp/piyush/mypage",
+        "sling.servlet.selectors="+ "data",
+        "sling.servlet.extensions="+ "html"
+})
 public class SimpleServlet extends SlingSafeMethodsServlet {
 	
     private static final long serialVersionUID = 1L;
     @Reference BlogsImpl blogs;
     
+    @Reference
+    ResourceResolver resourceResolver;
+
     @Override
-    protected void doGet(final SlingHttpServletRequest req,
-            final SlingHttpServletResponse resp) throws ServletException, IOException {
-        final Resource resource = req.getResource();
-        resp.setContentType("text/plain");
-        resp.getWriter().write("Title = " + resource.getValueMap().get(JcrConstants.JCR_TITLE));
+    protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
+        //ResourceResolver resourceResolver= ResolverUtil.newResolver(resourceResolverFactory);
+		String title= resourceResolver.getResource("/content/myproject/us/Hn").getValueMap().get("jcr:title",String.class);
+		response.setContentType("text/plain");
+		response.getWriter().write(title);
+
+        response.getWriter().write("<h1>this is my servlet</h1>");
+    response.setContentType("text/plain");
+//        Resource resource = request.getResource();
+//        String title1 = resource.getValueMap().get("jcr:title",String.class);
+//        title1 += " appended from servlet";
+//        response.getWriter().write(title1);
+//        response.setContentType("text/plain");
     }
 }
